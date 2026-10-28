@@ -1,0 +1,468 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CSE Consolidated Timetable — Advanced Clone</title>
+<style>
+  :root{
+    --accent: #0d47a1;
+    --muted: #eef4ff;
+    --border: #c7d1ea;
+    --cell-min-height: 68px;
+    --font: "Segoe UI", Roboto, Arial, sans-serif;
+  }
+  body{ font-family:var(--font); margin:18px; background:#f6f8ff; color:#111;}
+  header{ display:flex; gap:12px; align-items:center; justify-content:space-between; margin-bottom:12px;}
+  header h1{ font-size:18px; margin:0; text-align:center; flex:1;}
+  .controls{ display:flex; gap:8px; flex-wrap:wrap; align-items:center; }
+  button, .link-like{
+    background:var(--accent); color:white; border:none; padding:8px 10px; border-radius:6px; cursor:pointer;
+    font-weight:600;
+  }
+  .link-like{ background:transparent; color:var(--accent); border:1px solid var(--accent); padding:6px 10px; }
+  .tools{ display:flex; gap:8px; align-items:center;}
+  #search{ padding:8px; border-radius:6px; border:1px solid var(--border); min-width:220px;}
+  .wrap{ overflow:auto; border:1px solid var(--border); background:white; padding:10px; border-radius:8px;}
+  table{ width:100%; border-collapse:collapse; min-width:1100px; table-layout:fixed; }
+  thead th{ border:1px solid var(--border); background:var(--muted); padding:10px; text-align:center; font-weight:700; }
+  th[colspan="2"]{ min-width:160px; }
+  td, th{ font-size:12px; }
+  td.daycol{ width:92px; text-align:center; font-weight:700; background:#f2f6ff; vertical-align:middle; }
+  td.classcol{ width:84px; text-align:center; background:#fbfdff; font-weight:700; vertical-align:middle; }
+  td.timeslot{
+    border:1px solid var(--border);
+    padding:6px;
+    vertical-align:top;
+    min-height:var(--cell-min-height);
+    background: #fff;
+  }
+  .cell {
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    font-size:12px;
+    line-height:1.05;
+  }
+  .cell .line { font-weight:600; }
+  .cell .meta { font-size:11px; color:#2b4360; opacity:0.9; }
+  .cell[contenteditable="true"]{ outline:none; }
+  .subject-badge{ display:inline-block; padding:4px 6px; border-radius:6px; font-weight:700; font-size:11px; color:white; }
+  .time-row { display:flex; justify-content:center; gap:8px; align-items:center; margin-bottom:8px; color:#444; font-weight:600; }
+  .footer-note{ margin-top:10px; font-size:12px; color:#333; opacity:0.9;}
+  /* color classes assigned dynamically */
+  @media (max-width:920px){ table{ min-width:900px;} }
+  /* Print styles */
+  @media print {
+    header, .controls, .tools { display:none; }
+    body{ margin:0; }
+    table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>CSE Department —  Timetable (Academic Year 2025-26) </h1>
+
+  
+</header>
+
+
+  <table id="timetable" role="table" aria-label="CSE Consolidated Timetable">
+    <thead>
+      <tr>
+        <th>Day / Class</th>
+        <th>Class</th>
+        <th>10.30 to 11.30</th>
+        <th>11.30 to 12.30</th>
+        <th>12.30 to 1.15</th>
+        <th>1.15 to 2.15</th>
+        <th>2.15 to 3.15</th>
+        <th>3.15 to 3.30</th>
+        <th>3.30 to 4.30</th>
+        <th>4.30 to 5.30</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <!-- MON (4 rows) -->
+      <tr>
+        <td class="daycol" rowspan="4">MON</td>
+        <td class="classcol">FY</td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|10:30">
+            <div class="line">EM [KRR]</div>
+            <div class="meta">Batch: All • Hall: —</div>
+            <div class="meta">Subject: EM</div>
+          </div>
+        </td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|11:30">
+            <div class="line">EM-II [KBB]</div>
+            <div class="meta">Batch: All • Hall: —</div>
+            <div class="meta">Subject: EM-II</div>
+          </div>
+        </td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|12:30">
+            <div class="line">Recess</div>
+            <div class="meta">—</div>
+          </div>
+        </td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|1:15">
+            <div class="line">CHE B2</div>
+            <div class="meta">PPS LAB-B3 [AI/ML Lab] • CS BUCS Lab</div>
+            <div class="meta">Hall: —</div>
+          </div>
+        </td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|2:15">
+            <div class="line">CHE B2</div>
+            <div class="meta">PPS LAB-B3 [AI/ML Lab]</div>
+            <div class="meta">Hall: —</div>
+          </div>
+        </td>
+
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|FY|3:15"><div class="line">Break</div></div></td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|3:30">
+            <div class="line">WS G1 / EM G2</div>
+            <div class="meta">Hall: —</div>
+          </div>
+        </td>
+
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|FY|4:30">
+            <div class="line">WS G1 / EM G2</div>
+            <div class="meta">Hall: —</div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- MON SY -->
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|SY|10:30">
+            <div class="line">OE-II [LAA]</div>
+            <div class="meta">Hall 117</div>
+            <div class="meta">Batch: —</div>
+          </div>
+        </td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|SY|11:30">
+            <div class="line">DS [BPG]</div>
+            <div class="meta">Hall 117</div>
+          </div>
+        </td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|SY|1:15"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|SY|2:15"><div class="line">OOP [LAG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|SY|3:30">
+            <div class="line">DS LAB-B1 [CS Lab] / OOP LAB-B2 [PP Lab]</div>
+            <div class="meta">DE LAB-B3 / CS Lab</div>
+          </div>
+        </td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|SY|4:30">
+            <div class="line">DS LAB-B1, B2, B3 [AI LAB]</div>
+            <div class="meta">CS Lab</div>
+          </div>
+        </td>
+      </tr>
+
+      <!-- MON TY -->
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|1:15"><div class="line">EL-II [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|2:15"><div class="line">SE [PVK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|3:30"><div class="line">SE LAB-B1,B2,B3 [AI LAB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|TY|4:30"><div class="line">SE LAB-B1,B2,B3 [AI LAB]</div></div></td>
+      </tr>
+
+      <!-- MON B.Tech -->
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|BTech|10:30">
+            <div class="line">FLS LAB-B1 [CS Lab]</div>
+            <div class="meta">Library Hr: B2,B3</div>
+          </div>
+        </td>
+        <td class="timeslot">
+          <div class="cell" contenteditable="true" data-cell="MON|BTech|11:30">
+            <div class="line">AI LAB-B1 [AI,ML & CC Lab]</div>
+            <div class="meta">FLS B2</div>
+          </div>
+        </td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|1:15"><div class="line">AI [LAG] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|2:15"><div class="line">CC [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|3:30"><div class="line">EL-VII [JSM] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="MON|BTech|4:30"><div class="line">EL-VI [SSB] (Hall 117)</div></div></td>
+      </tr>
+
+      <!-- TUE (4 rows) -->
+      <tr>
+        <td class="daycol" rowspan="4">TUE</td>
+        <td class="classcol">FY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|10:30"><div class="line">EM [KRR]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|11:30"><div class="line">EM-II [KBB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|1:15"><div class="line">CHE B3 / PPS LAB-B1 [AI/ML Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|2:15"><div class="line">CS B2 (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:30"><div class="line">WS G2 / EM G1</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|4:30"><div class="line">WS G2 / EM G1</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|10:30"><div class="line">OE-II [LAA] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|11:30"><div class="line">DS [BPG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|1:15"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|2:15"><div class="line">OOP [LAG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:30"><div class="line">DS LAB / OOP LAB (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|4:30"><div class="line">LIBRARY HR / DE LAB-B3</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|1:15"><div class="line">EL-II [JSM] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|2:15"><div class="line">SE [PVK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:30"><div class="line">DBS LAB-B1,B2,B3 (AI LAB)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|4:30"><div class="line">EL-VII [JSM] / EL-VI [SSB]</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|10:30"><div class="line">AI LAB-B1 [AI,ML & CC Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|11:30"><div class="line">FLS LAB-B1 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|1:15"><div class="line">AI [LAG] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|2:15"><div class="line">EL-VIII [BPG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:30"><div class="line">CC [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|4:30"><div class="line">EL-VI [SSB] (Hall 117)</div></div></td>
+      </tr>
+
+      <!-- WED rows -->
+      <tr>
+        <td class="daycol" rowspan="4">WED</td>
+        <td class="classcol">FY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|10:30"><div class="line">EM [KRR]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|11:30"><div class="line">EM-II [KBB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|1:15"><div class="line">CS [LAA]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|2:15"><div class="line">NSS / SPORTS</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|3:30"><div class="line">LIBRARY HR</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|FY|4:30"><div class="line">SPORTS / MDM</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|10:30"><div class="line">DS [BPG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|11:30"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|1:15"><div class="line">DE [SSD]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|2:15"><div class="line">OOP [LAG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|3:30"><div class="line">DS LAB-B2 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|SY|4:30"><div class="line">LIBRARY HR / SPORTS</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|1:15"><div class="line">EL-II [JPK]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|2:15"><div class="line">SE [PVK]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|3:30"><div class="line">EL-VII [JSM]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|4:30"><div class="line">EL-VI [SSB]</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|10:30"><div class="line">AI LAB-B2 / AI,ML & CC Lab</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|11:30"><div class="line">FLS LAB-B3 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|1:15"><div class="line">AI [LAG] / CC [JPK]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|2:15"><div class="line">EL-VIII [BPG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|BTech|3:15"><div class="line">Break</div>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|3:30"><div class="line">EL-VII [JSM]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="WED|TY|4:30"><div class="line">EL-VI [SSB]</div></div></td>
+
+
+ <!-- TUE (4 rows) -->
+      <tr>
+        <td class="daycol" rowspan="4">THU</td>
+        <td class="classcol">FY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|10:30"><div class="line">EM [KRR]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|11:30"><div class="line">EM-II [KBB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|1:15"><div class="line">CHE B3 / PPS LAB-B1 [AI/ML Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|2:15"><div class="line">CS B2 (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:30"><div class="line">WS G2 / EM G1</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|4:30"><div class="line">WS G2 / EM G1</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|10:30"><div class="line">OE-II [LAA] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|11:30"><div class="line">DS [BPG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|1:15"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|2:15"><div class="line">OOP [LAG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:30"><div class="line">DS LAB / OOP LAB (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|4:30"><div class="line">LIBRARY HR / DE LAB-B3</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|1:15"><div class="line">EL-II [JSM] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|2:15"><div class="line">SE [PVK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:30"><div class="line">DBS LAB-B1,B2,B3 (AI LAB)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|4:30"><div class="line">EL-VII [JSM] / EL-VI [SSB]</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|10:30"><div class="line">AI LAB-B1 [AI,ML & CC Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|11:30"><div class="line">FLS LAB-B1 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|1:15"><div class="line">AI [LAG] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|2:15"><div class="line">EL-VIII [BPG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:30"><div class="line">CC [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|4:30"><div class="line">EL-VI [SSB] (Hall 117)</div></div></td>
+      </tr> 
+<!-- TUE (4 rows) -->
+      <tr>
+        <td class="daycol" rowspan="4">FIR</td>
+        <td class="classcol">FY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|10:30"><div class="line">EM [KRR]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|11:30"><div class="line">EM-II [KBB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|1:15"><div class="line">CHE B3 / PPS LAB-B1 [AI/ML Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|2:15"><div class="line">CS B2 (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:30"><div class="line">WS G2 / EM G1</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|4:30"><div class="line">WS G2 / EM G1</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|10:30"><div class="line">OE-II [LAA] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|11:30"><div class="line">DS [BPG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|1:15"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|2:15"><div class="line">OOP [LAG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:30"><div class="line">DS LAB / OOP LAB (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|4:30"><div class="line">LIBRARY HR / DE LAB-B3</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|1:15"><div class="line">EL-II [JSM] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|2:15"><div class="line">SE [PVK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:30"><div class="line">DBS LAB-B1,B2,B3 (AI LAB)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|4:30"><div class="line">EL-VII [JSM] / EL-VI [SSB]</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|10:30"><div class="line">AI LAB-B1 [AI,ML & CC Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|11:30"><div class="line">FLS LAB-B1 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|1:15"><div class="line">AI [LAG] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|2:15"><div class="line">EL-VIII [BPG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:30"><div class="line">CC [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|4:30"><div class="line">EL-VI [SSB] (Hall 117)</div></div></td>
+      </tr>    
+<!-- TUE (4 rows) -->
+      <tr>
+        <td class="daycol" rowspan="4">SAT</td>
+        <td class="classcol">FY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|10:30"><div class="line">EM [KRR]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|11:30"><div class="line">EM-II [KBB]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|1:15"><div class="line">CHE B3 / PPS LAB-B1 [AI/ML Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|2:15"><div class="line">CS B2 (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|3:30"><div class="line">WS G2 / EM G1</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|FY|4:30"><div class="line">WS G2 / EM G1</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">SY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|10:30"><div class="line">OE-II [LAA] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|11:30"><div class="line">DS [BPG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|1:15"><div class="line">DM [DRS] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|2:15"><div class="line">OOP [LAG] (Hall 117)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|3:30"><div class="line">DS LAB / OOP LAB (CS Lab)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|SY|4:30"><div class="line">LIBRARY HR / DE LAB-B3</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">TY</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|10:30"><div class="line">TOC [DRS] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|11:30"><div class="line">DBS [MAR] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|1:15"><div class="line">EL-II [JSM] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|2:15"><div class="line">SE [PVK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|3:30"><div class="line">DBS LAB-B1,B2,B3 (AI LAB)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|TY|4:30"><div class="line">EL-VII [JSM] / EL-VI [SSB]</div></div></td>
+      </tr>
+
+      <tr>
+        <td class="classcol">B.Tech</td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|10:30"><div class="line">AI LAB-B1 [AI,ML & CC Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|11:30"><div class="line">FLS LAB-B1 [CS Lab]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|12:30"><div class="line">Recess</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|1:15"><div class="line">AI [LAG] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|2:15"><div class="line">EL-VIII [BPG]</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:15"><div class="line">Break</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|3:30"><div class="line">CC [JPK] (Hall 116)</div></div></td>
+        <td class="timeslot"><div class="cell" contenteditable="true" data-cell="TUE|BTech|4:30"><div class="line">EL-VI [SSB] (Hall 117)</div></div></td>
+      </tr>      
+<script>
+

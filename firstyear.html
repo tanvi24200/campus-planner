@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>First Year Timetable</title>
+
+    <!-- PDF Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            background: #004aad;
+            color: white;
+            padding: 12px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: #d9e6ff;
+        }
+
+        /* Highlight Today Row */
+        .today-row {
+            background: #fff7c2 !important;
+            animation: glowToday 1.5s infinite alternate;
+        }
+
+        /* Highlight Current Slot */
+        .current-slot {
+            background: #c8ffd1 !important;
+            font-weight: bold;
+            animation: glowSlot 1.2s infinite alternate;
+        }
+
+        @keyframes glowToday {
+            from { box-shadow: 0 0 4px #ffdd57; }
+            to   { box-shadow: 0 0 14px #ffdd57; }
+        }
+
+        @keyframes glowSlot {
+            from { box-shadow: 0 0 4px #4eff77; }
+            to   { box-shadow: 0 0 14px #4eff77; }
+        }
+
+        .home-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            background: #004aad;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .home-btn:hover {
+            background: #002f70;
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 10px 15px;
+            margin: 5px;
+            background: #28a745;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .action-btn:hover {
+            background: #1e7e34;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>First Year Timetable</h2>
+
+<table id="timetable">
+    <tr>
+        <th>Day</th>
+        <th>10:30–11:30</th>
+        <th>11:30–12:30</th>
+        <th>12:30–1:15 (Recess)</th>
+        <th>1:15–2:15</th>
+        <th>2:15–3:15</th>
+        <th>3:15–3:30</th>
+        <th>3:30–4:30</th>
+        <th>4:30–5:30</th>
+    </tr>
+
+    <tr>
+        <td>Monday</td>
+        <td>EM [KRR]</td>
+        <td>EM-I [KBB]</td>
+        <td>RECESS</td>
+        <td>CHE B2 / PPS LAB-B3 ,CS Lab- B1</td>
+        <td>CHE B2 / PPS LAB-B3 ,CS Lab- B1</td>
+        <td>Break</td>
+        <td>WS G1 / EM G2</td>
+        <td>WS G1 / EM G2</td>
+    </tr>
+
+    <tr>
+        <td>Tuesday</td>
+        <td>EM [KRR]</td>
+        <td>EM-I [KBB]</td>
+        <td>RECESS</td>
+        <td>CHE B3 / PPS LAB-B1 [AI,ML Lab] / CS B2</td>
+        <td>CHE B3 / PPS LAB-B1 [AI,ML Lab] / CS B2</td>
+        <td>Break</td>
+        <td>WS G1 / EM G2</td>
+        <td>WS G1 / EM G2</td>
+    </tr>
+
+    <tr>
+        <td>Wednesday</td>
+        <td>EM [KRR]</td>
+        <td>EM-I [KBB]</td>
+        <td>RECESS</td>
+        <td>CS [LAA]</td>
+        <td>NSS-I[BPG]</td>
+        <td>Break</td>
+        <td>SPORT-B1,B2,B3</td>
+        <td>SPORT-B1,B2,B3</td>
+    </tr>
+
+    <tr>
+        <td>Thursday</td>
+        <td>CHE [PSP]</td>
+        <td>PPS [SSB]</td>
+        <td>RECESS</td>
+        <td>CS [LAA]</td>
+        <td>EM [KRR]</td>
+        <td>Break</td>
+        <td>NSS-I[PR-ALL]</td>
+        <td>NSS-I[PR-ALL]</td>
+    </tr>
+
+    <tr>
+        <td>Friday</td>
+        <td>CHE [PSP]</td>
+        <td>PPS [SSB]</td>
+        <td>RECESS</td>
+        <td>WS G1</td>
+        <td>WS G1</td>
+        <td>Break</td>
+        <td>SPORTS</td>
+        <td>SPORTS</td>
+    </tr>
+
+    <tr>
+        <td>Saturday</td>
+        <td>CHE [PSP]</td>
+        <td>PPS [SSB]</td>
+        <td>RECESS</td>
+        <td>SPORTS</td>
+        <td>SPORTS</td>
+        <td>Break</td>
+        <td>CHE B1 / PPS LAB-B2 [AI,ML Lab] / CS B3</td>
+        <td>CHE B1 / PPS LAB-B2 [AI,ML Lab] / CS B3</td>
+    </tr>
+</table>
+
+<!-- Buttons -->
+<div style="text-align:center; margin-top:20px;">
+    <button onclick="enableEdit()" class="action-btn">Edit Timetable</button>
+    <button onclick="exportPDF()" class="action-btn">Export PDF</button>
+</div>
+
+<a href="timetable.html" class="home-btn">Back to Timetable</a>
+
+<script>
+// Highlight Today
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const today = days[new Date().getDay()];
+
+document.querySelectorAll("#timetable tr").forEach(row => {
+    if (row.children[0] && row.children[0].innerText === today) {
+        row.classList.add("today-row");
+    }
+});
+
+// Highlight Current Slot
+const timeSlots = [
+    { start: "10:30", end: "11:30", index: 1 },
+    { start: "11:30", end: "12:30", index: 2 },
+    { start: "12:30", end: "13:15", index: 3 },
+    { start: "13:15", end: "14:15", index: 4 },
+    { start: "14:15", end: "15:15", index: 5 },
+    { start: "15:15", end: "15:30", index: 6 },
+    { start: "15:30", end: "16:30", index: 7 },
+    { start: "16:30", end: "17:30", index: 8 }
+];
+
+function toMinutes(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+}
+
+const now = new Date();
+const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+let currentIndex = null;
+
+timeSlots.forEach(slot => {
+    if (currentMinutes >= toMinutes(slot.start) && currentMinutes < toMinutes(slot.end)) {
+        currentIndex = slot.index;
+    }
+});
+
+if (currentIndex !== null) {
+    document.querySelectorAll("#timetable tr").forEach(row => {
+        if (row.classList.contains("today-row")) {
+            row.children[currentIndex].classList.add("current-slot");
+        }
+    });
+}
+
+// Enable Edit
+function enableEdit() {
+    document.querySelectorAll("#timetable td").forEach(cell => {
+        cell.contentEditable = true;
+        cell.style.backgroundColor = "#fff3cd";
+    });
+    alert("Now you can edit!");
+}
+
+// Export PDF WITHOUT highlight
+function exportPDF() {
+
+    const todayRow = document.querySelector(".today-row");
+    const currentSlot = document.querySelector(".current-slot");
+
+    if (todayRow) todayRow.classList.remove("today-row");
+    if (currentSlot) currentSlot.classList.remove("current-slot");
+
+    let element = document.getElementById("timetable");
+
+    let opt = {
+        margin: 0.5,
+        filename: 'First_Year_Timetable.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' }
+    };
+
+    html2pdf().set(opt).from(element).save().then(() => {
+        if (todayRow) todayRow.classList.add("today-row");
+        if (currentSlot) currentSlot.classList.add("current-slot");
+    });
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSIEMS Academic System</title>
+
+<style>
+*{
+    padding:0;
+    margin:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI", Arial, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#e8eef7,#c7d4ee);
+    height:100vh;
+    overflow:hidden;
+}
+
+/* NAVBAR */
+nav{
+    width:100%;
+    padding:15px 45px;
+    background:#0d47a1;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:100;
+    box-shadow:0 3px 8px rgba(0,0,0,0.3);
+}
+
+.logo{
+    font-size:22px;
+    font-weight:600;
+}
+
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:25px;
+}
+
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:15px;
+}
+
+nav ul li a:hover{
+    color:#bbdefb;
+}
+
+/* RIGHT TEXT ON FIRST LINE */
+.top-right-text{
+    position:absolute;
+    top:75px; /* just under navbar */
+    right:25px;
+    font-size:14px;
+    color:#0d47a1;
+    font-weight:600;
+}
+
+/* MAIN FULL PAGE CONTAINER */
+.main{
+    height:calc(100vh - 70px);
+    margin-top:70px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+}
+
+/* HERO SECTION */
+.hero h1{
+    font-size:32px;
+    color:#0d47a1;
+    font-weight:700;
+}
+
+.hero p{
+    font-size:16px;
+    color:#333;
+    margin-top:8px;
+}
+
+/* SEARCH AREA */
+.search-area{
+    margin-top:25px;
+    display:flex;
+    justify-content:center;
+    gap:10px;
+}
+
+.search-area input{
+    padding:10px 15px;
+    width:300px;
+    border-radius:8px;
+    border:1px solid #666;
+    font-size:15px;
+}
+
+.search-area button{
+    padding:10px 22px;
+    border:none;
+    background:#0d47a1;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.3s;
+    font-size:15px;
+}
+
+.search-area button:hover{
+    background:#1565c0;
+    transform:scale(1.05);
+}
+
+/* FEATURE CARDS */
+.features{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:18px;
+}
+
+.card{
+    width:230px;
+    padding:18px;
+    text-align:center;
+    background:white;
+    border-radius:14px;
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+}
+
+.card h3{
+    color:#0d47a1;
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card p{
+    color:#333;
+    font-size:14px;
+}
+
+.card button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    background:#0d47a1;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<!-- NAVIGATION -->
+<nav>
+    <div class="logo">SSIEMS Academic System</div>
+    <ul>
+        <li><a href="resources.html">Resources</a></li>
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="timetable.html">Timetable</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="login.html">Login</a></li>
+    </ul>
+</nav>
+
+<!-- RIGHT TEXT BELOW NAVBAR -->
+<div class="top-right-text">@ SSIEMS Academic System</div>
+
+<!-- FULL PAGE CONTENT -->
+<div class="main">
+
+    <div class="hero">
+        <h1>Empowering Students & Staff</h1>
+        <p>Your all-in-one system for viewing, generating, and managing timetables.</p>
+
+        <div class="search-area">
+            <input type="text" id="searchInput" placeholder="Search timetable, course, page…" onkeydown="if(event.key==='Enter') searchPage()">
+            <button onclick="searchPage()">Search</button>
+        </div>
+    </div>
+
+    <div class="features">
+
+        <div class="card">
+            <h3>📅 Academic Timetable</h3>
+            <p>View class and lecturer timetables.</p>
+        </div>
+
+        <div class="card">
+            <h3>⚙️ Generate Schedule</h3>
+            <p>Create optimized class schedules.</p>
+        </div>
+
+        <div class="card">
+            <h3>🔐 Secure Login</h3>
+            <p>Access academic data securely.</p>
+        </div>
+
+        <div class="card">
+            <h3>📂 Resources</h3>
+            <p>View all timetables & exam info.</p>
+            <button onclick="window.location.href='resources.html'">View All</button>
+        </div>
+
+    </div>
+</div>
+
+<script>
+function searchPage() {
+    let q = document.getElementById("searchInput").value.toLowerCase().trim();
+
+    if (q === "home") window.location.href = "index.html";
+    else if (q.includes("timetable")) window.location.href = "timetable.html";
+    else if (q.includes("about")) window.location.href = "about.html";
+    else if (q.includes("login")) window.location.href = "login.html";
+    else if (q.includes("student login")) window.location.href = "student-login.html";
+    else if (q.includes("remidial exam")) window.location.href = "remidal.html";
+    else if (q.includes("classtest exam")) window.location.href = "classtest.html";
+    else if (q.includes("mid sem")) window.location.href = "midsem.html";
+    else if (q.includes("combined timetable")) window.location.href = "combined.html";
+    else if (q.includes("first year")) window.location.href = "firstyear.html";
+    else if (q.includes("second year")) window.location.href = "secondyear.html";
+    else if (q.includes("third year")) window.location.href = "thirdyear.html";
+    else if (q.includes("final year")) window.location.href = "finalyear.html";
+    else if (q.includes("calander")) window.location.href = "holiday.html";
+    else alert("No matching page found.");
+}
+</script>
+
+</body>
+</html>

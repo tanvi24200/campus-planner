@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Timetable | SSEMIS</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#e8eef7,#cfd7e6);
+    min-height:100vh;
+}
+
+/* NAVBAR */
+nav{
+    width:100%;
+    background:#0d47a1;
+    padding:16px 40px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+}
+nav ul{
+    list-style:none;
+    display:flex;
+    gap:26px;
+}
+nav ul li a{
+    text-decoration:none;
+    color:white;
+    font-size:16px;
+}
+nav ul li a:hover{
+    opacity:0.7;
+}
+
+/* PAGE TITLE */
+.dashboard-section{
+    text-align:center;
+    margin-top:60px;
+}
+.dashboard-section h1{
+    color:#0d47a1;
+    font-size:28px;
+    animation:fadeIn 0.8s ease-in-out;
+}
+
+/* SELECT BOX CARD */
+.form-box{
+    width:360px;
+    margin:25px auto;
+    padding:25px;
+    background:rgba(255,255,255,0.88);
+    border-radius:15px;
+    backdrop-filter:blur(10px);
+    box-shadow:0 8px 25px rgba(0,0,0,0.12);
+    animation:fadeIn 1s ease;
+}
+
+label{
+    font-weight:600;
+    color:#333;
+    display:block;
+    margin-top:12px;
+    margin-bottom:5px;
+    text-align:left;
+}
+
+select{
+    width:100%;
+    padding:10px;
+    font-size:16px;
+    border-radius:8px;
+    border:1px solid #bbb;
+    margin-bottom:10px;
+}
+
+#openBtn{
+    width:100%;
+    margin-top:12px;
+    padding:10px;
+    background:#0d47a1;
+    color:white;
+    font-size:17px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+#openBtn:hover{
+    opacity:0.85;
+}
+
+/* LOGOUT BUTTON */
+#logoutBtn{
+    position:fixed;
+    top:20px;
+    right:20px;
+    padding:8px 12px;
+    background:#0d47a1;
+    color:white;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+}
+#logoutBtn:hover{
+    opacity:0.85;
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN REQUIREMENT -->
+<script>
+(function() {
+    if (!localStorage.getItem("studentLoggedIn")) {
+        alert("Please login first.");
+        window.location.href = "student-login.html";
+    }
+})();
+</script>
+
+<!-- NAVBAR -->
+<nav>
+    <h2 class="logo">SSIEMS Academic Year Timetable</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="timetable.html">Timetable</a></li>
+        <li><a href="about.html">About</a></li>
+    </ul>
+</nav>
+
+<!-- LOGOUT BUTTON -->
+<button id="logoutBtn" onclick="studentLogout()">Logout</button>
+
+<!-- MAIN CONTENT -->
+<section class="dashboard-section">
+    <h1>Select Timetable</h1>
+
+    <div class="form-box">
+        <label>Department</label>
+        <select id="dept">
+            <option value="CS">Computer Science</option>
+            <option value="IT">IT</option>
+            <option value="MECH">Mechanical</option>
+            <option value="CIVIL">Civil</option>
+        </select>
+
+        <label>Academic Year</label>
+        <select id="year">
+            <option value="">-- Select Academic Year --</option>
+            <option value="First Year">First Year</option>
+            <option value="Second Year">Second Year</option>
+            <option value="Third Year">Third Year</option>
+            <option value="Final Year">Final Year</option>
+            <option value="Combined">Combined</option>
+        </select>
+
+        <button id="openBtn" onclick="openTimetable()">Open Timetable</button>
+    </div>
+</section>
+
+<script>
+function openTimetable() {
+    const dept = document.getElementById("dept").value;
+    const year = document.getElementById("year").value;
+
+    if (dept !== "CS") {
+        alert("Timetable not added for this department yet.");
+        return;
+    }
+
+    switch (year) {
+        case "First Year":
+            window.location.href = "firstyear.html";
+            break;
+        case "Second Year":
+            window.location.href = "secondyear.html";
+            break;
+        case "Third Year":
+            window.location.href = "thirdyear.html";
+            break;
+        case "Final Year":
+            window.location.href = "finalyear.html";
+            break;
+        case "Combined":
+            window.location.href = "combined.html";
+            break;
+        default:
+            alert("Please select an academic year.");
+    }
+}
+
+// LOGOUT FUNCTION
+function studentLogout() {
+    localStorage.removeItem("studentLoggedIn");
+    alert("Logged out successfully!");
+    window.location.href = "student-login.html";
+}
+</script>
+
+</body>
+</html>

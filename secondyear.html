@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Second Year Timetable</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f6ff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            background: #004aad;
+            color: white;
+            padding: 12px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+        }
+
+        table th, table td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        th {
+            background: #d9e6ff;
+        }
+
+        /* Highlight Today Row */
+        .today-row {
+            background: #fff7c2 !important;
+            animation: glowToday 1.5s infinite alternate;
+        }
+
+        /* Highlight Current Time Slot */
+        .current-slot {
+            background: #c8ffd1 !important;
+            font-weight: bold;
+            animation: glowSlot 1.2s infinite alternate;
+        }
+
+        @keyframes glowToday {
+            from { box-shadow: 0 0 4px #ffdd57; }
+            to   { box-shadow: 0 0 14px #ffdd57; }
+        }
+
+        @keyframes glowSlot {
+            from { box-shadow: 0 0 4px #4eff77; }
+            to   { box-shadow: 0 0 14px #4eff77; }
+        }
+
+        .home-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 20px auto;
+            padding: 10px;
+            background: #004aad;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .home-btn:hover {
+            background: #002f70;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Second Year (SY) Timetable</h2>
+
+<!-- IMPORTANT: Added id="timetable" -->
+<table id="timetable">
+  <tr>
+    <th>Day</th>
+    <th>10:30–11:30</th>
+    <th>11:30–12:30</th>
+    <th>12:30–1:15 (Recess)</th>
+    <th>1:15–2:15</th>
+    <th>2:15–3:15</th>
+    <th>3:15–3:30 (Break)</th>
+    <th>3:30–4:30</th>
+    <th>4:30–5:30</th>
+  </tr>
+
+  <tr>
+    <td>Monday</td>
+    <td>OE-I [LAA] (Theory, Hall 117)</td>
+    <td>DS [BPG] (Theory, Hall 117)</td>
+    <td>RECESS</td>
+    <td>DM [DRS]</td>
+    <td>OOP [LAG]</td>
+    <td>Break</td>
+    <td>DS Lab-B1/ OOP LAB-B2/DE LAB-B3</td>
+    <td>DS Lab-B1/ OOP LAB-B2/DE LAB-B3</td>
+  </tr>
+
+  <tr>
+    <td>Tuesday</td>
+    <td>OE-I [LAA]</td>
+    <td>DS [BPG]</td>
+    <td>RECESS</td>
+    <td>DM [DRS]</td>
+    <td>OOP [LAG]</td>
+    <td>Break</td>
+    <td>DS Lab-B2/ OOP LAB-B3/DE LAB-B1</td>
+    <td>DS Lab-B2/ OOP LAB-B3/DE LAB-B1</td>
+  </tr>
+
+  <tr>
+    <td>Wednesday</td>
+    <td>DS [BPG]</td>
+    <td>DM [DRS]</td>
+    <td>RECESS</td>
+    <td>DE [SSD]</td>
+    <td>OOP [LAG]</td>
+    <td>Break</td>
+    <td>DS Lab-B3/DE LAB-B2/Library Hr-B1</td>
+    <td>DS Lab-B3/DE LAB-B2/Library Hr-B1</td>
+  </tr>
+
+  <tr>
+    <td>Thursday</td>
+    <td>OOP [LAG]</td>
+    <td>UHV-II [KSB]</td>
+    <td>RECESS</td>
+    <td>EL-VII [JSM]</td>
+    <td>DE [SSD]</td>
+    <td>Break</td>
+    <td>OOP LAB-B3</td>
+    <td>Library Hr-B1</td>
+  </tr>
+
+  <tr>
+    <td>Friday</td>
+    <td>DM [DRS]</td>
+    <td>UHV-II [KSB]</td>
+    <td>RECESS</td>
+    <td>EM-III [CAA]</td>
+    <td>DS [BPG]</td>
+    <td>Break</td>
+    <td>MDM[SSD]</td>
+    <td>OOP [LAG]</td>
+  </tr>
+
+  <tr>
+    <td>Saturday</td>
+    <td>DE [SSD]</td>
+    <td>UHV-II [KSB]</td>
+    <td>RECESS</td>
+    <td>CSM [SBR]</td>
+    <td>EM-III [CAA]</td>
+    <td>Break</td>
+    <td>MDM[SSD]</td>
+    <td>DS [BPG]</td>
+  </tr>
+
+</table>
+
+<a href="timetable.html" class="home-btn">Back to Timetable</a>
+
+<script>
+// === Highlight Today's Row ===
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const today = days[new Date().getDay()];
+
+document.querySelectorAll("#timetable tr").forEach(row => {
+    if (row.children[0] && row.children[0].innerText === today) {
+        row.classList.add("today-row");
+    }
+});
+
+// === Highlight Current Time Slot ===
+const timeSlots = [
+    { start: "10:30", end: "11:30", index: 1 },
+    { start: "11:30", end: "12:30", index: 2 },
+    { start: "12:30", end: "13:15", index: 3 },
+    { start: "13:15", end: "14:15", index: 4 },
+    { start: "14:15", end: "15:15", index: 5 },
+    { start: "15:15", end: "15:30", index: 6 },
+    { start: "15:30", end: "16:30", index: 7 },
+    { start: "16:30", end: "17:30", index: 8 }
+];
+
+function toMinutes(t) {
+    const [h, m] = t.split(":").map(Number);
+    return h * 60 + m;
+}
+
+const now = new Date();
+const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+let currentIndex = null;
+
+timeSlots.forEach(slot => {
+    const start = toMinutes(slot.start);
+    const end = toMinutes(slot.end);
+
+    if (currentMinutes >= start && currentMinutes < end) {
+        currentIndex = slot.index;
+    }
+});
+
+// Apply to today's row only
+if (currentIndex !== null) {
+    document.querySelectorAll("#timetable tr").forEach(row => {
+        if (row.classList.contains("today-row")) {
+            row.children[currentIndex].classList.add("current-slot");
+        }
+    });
+}
+</script>
+
+</body>
+</html>

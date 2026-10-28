@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Final Year (B.Tech) Timetable</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#eef4ff; margin:0; padding:20px; }
+    h2 { text-align:center; background:#002f70; color:#fff; padding:12px 0; margin:0; border-radius:4px; }
+    table { width:100%; border-collapse:collapse; margin-top:18px; background:#fff; }
+    th, td { border:1px solid #222; padding:8px; text-align:center; font-size:14px; }
+    th { background:#d7e6ff; }
+
+    /* Today highlight */
+    .today-row {
+      background:#fff3c4 !important;
+      animation: glowToday 1.5s infinite alternate;
+    }
+
+    /* Current slot highlight */
+    .current-slot {
+      background:#c9ffd3 !important;
+      font-weight:bold;
+      animation: glowSlot 1.2s infinite alternate;
+    }
+
+    @keyframes glowToday {
+      from { box-shadow:0 0 4px #ffdd5e; }
+      to   { box-shadow:0 0 14px #ffdd5e; }
+    }
+
+    @keyframes glowSlot {
+      from { box-shadow:0 0 4px #40ff79; }
+      to   { box-shadow:0 0 14px #40ff79; }
+    }
+
+    .home {
+      display:block; width:180px; margin:18px auto; text-align:center;
+      padding:10px; background:#002f70; color:#fff; text-decoration:none;
+      border-radius:6px;
+    }
+    .home:hover { background:#001f52; }
+  </style>
+</head>
+<body>
+
+<h2>Final Year (B.Tech) Timetable</h2>
+
+<!-- Added ID -->
+<table id="timetable">
+  <tr>
+    <th>Day</th>
+    <th>10:30–11:30</th>
+    <th>11:30–12:30</th>
+    <th>12:30–1:15 (Recess)</th>
+    <th>1:15–2:15</th>
+    <th>2:15–3:15</th>
+    <th>3:15–3:30 (Break)</th>
+    <th>3:30–4:30</th>
+    <th>4:30–5:30</th>
+  </tr>
+
+  <tr>
+    <td>Monday</td>
+    <td>FLS Lab — B1 / Library Hr- B2,B3</td>
+    <td>FLS Lab — B1 / Library Hr- B2,B3</td>
+    <td>RECESS</td>
+    <td>AI [LAG]</td>
+    <td>CC[JPK]</td>
+    <td>Break</td>
+    <td>EL-VII[JSM]</td>
+    <td>EL-VI[SSB]</td>
+  </tr>
+
+  <tr>
+    <td>Tuesday</td>
+    <td>AI Lab — B1/ Library Hr- B2/FLS-B2</td>
+    <td>AI Lab — B1/ Library Hr- B2/FLS-B2</td>
+    <td>RECESS</td>
+    <td>AI [LAG]</td>
+    <td>EL-VIII[BPG]</td>
+    <td>Break</td>
+    <td>CC[JPK]</td>
+    <td>EL-VI[SSB]</td>
+  </tr>
+
+  <tr>
+    <td>Wednesday</td>
+    <td>AI Lab — B2/ Library Hr- B3/FLS-B1</td>
+    <td>AI Lab — B2/ Library Hr- B3/FLS-B1</td>
+    <td>RECESS</td>
+    <td>AI [LAG]</td>
+    <td>EL-VIII[BPG]</td>
+    <td>Break</td>
+    <td>EL-VII[JSM]</td>
+    <td>EL-VI[SSB]</td>
+  </tr>
+
+  <tr>
+    <td>Thursday</td>
+    <td>CC Lab — B1/ Library Hr- B3/FLS-B1</td>
+    <td>CC Lab — B1/ Library Hr- B3/FLS-B1</td>
+    <td>RECESS</td>
+    <td>CC[JPK]</td>
+    <td>EL-VIII [BPG] — Theory</td>
+    <td>Break</td>
+    <td>EL-VII [JSM] — Theory</td>
+    <td> Library</td>
+  </tr>
+
+  <tr>
+    <td>Friday</td>
+    <td>CC Lab — B1</td>
+    <td>FLS Lab — B2</td>
+    <td>RECESS</td>
+    <td>CC (JPK) — Theory</td>
+    <td>EL-VIII [BPG] — Theory</td>
+    <td>Break</td>
+    <td>Library Hour / Project Work</td>
+    <td>Industry Talk / Seminar</td>
+  </tr>
+
+  <tr>
+    <td>Saturday</td>
+    <td>-</td>
+    <td>-</td>          -
+    <td>-</td>
+    <td>          -</td>
+    <td>          -</td>
+    <td>          -</td>
+    <td>          -</td>
+    <td>          -</td>
+  </tr>
+
+</table>
+
+<a href="timetable.html" class="home">Back to Timetable</a>
+
+<script>
+// === Highlight Today's Row ===
+const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+const today = days[new Date().getDay()];
+
+document.querySelectorAll("#timetable tr").forEach(row => {
+  if (row.children[0] && row.children[0].innerText === today) {
+    row.classList.add("today-row");
+  }
+});
+
+// === Highlight Current Time Slot ===
+const timeSlots = [
+  { start:"10:30", end:"11:30", index:1 },
+  { start:"11:30", end:"12:30", index:2 },
+  { start:"12:30", end:"13:15", index:3 },
+  { start:"13:15", end:"14:15", index:4 },
+  { start:"14:15", end:"15:15", index:5 },
+  { start:"15:15", end:"15:30", index:6 },
+  { start:"15:30", end:"16:30", index:7 },
+  { start:"16:30", end:"17:30", index:8 }
+];
+
+function toMinutes(t){
+  const [h,m] = t.split(":").map(Number);
+  return h*60 + m;
+}
+
+const now = new Date();
+const currentMinutes = now.getHours()*60 + now.getMinutes();
+let currentIndex = null;
+
+timeSlots.forEach(slot=>{
+  const s = toMinutes(slot.start);
+  const e = toMinutes(slot.end);
+  if(currentMinutes >= s && currentMinutes < e){
+    currentIndex = slot.index;
+  }
+});
+
+// Highlight slot only for today
+if(currentIndex !== null){
+  document.querySelectorAll("#timetable tr").forEach(row=>{
+    if(row.classList.contains("today-row")){
+      row.children[currentIndex].classList.add("current-slot");
+    }
+  });
+}
+</script>
+
+</body>
+</html>
